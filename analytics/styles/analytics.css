@@ -1,0 +1,37 @@
+.table{
+	display:table;
+	max-width: 100%;
+	table-layout: fixed;
+	width: 100%;
+    
+	border: 1px solid #ccc;
+}
+.row{
+	display: table-row;
+}
+.row:nth-child(2n){
+  background-color: #f0f0f0;
+}
+.cell{
+	display: table-cell;
+	max-width: 200px;
+}
+.cell > span{
+	display: inline-block;
+	max-width: 90%;
+	overflow: hidden;
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding: 0px 5%;
+	line-height: 1.5em;
+}
+.header{
+  background-color: #888;
+  color: #fff;
+  text-align:center;
+}
+.header .cell{
+  outline: 1px solid #777;
+}
+

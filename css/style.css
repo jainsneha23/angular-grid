@@ -1,0 +1,12 @@
+html, body{
+	font-family: Helvetica, Arial, Sans-serif;
+	color: #070707;
+	overflow-x: hidden;
+	font-size: 14px;
+	max-width: 100%;
+}
+div[am-grid]{
+  width:80%;
+  margin:auto;
+  padding:10px;
+}

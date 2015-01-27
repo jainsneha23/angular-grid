@@ -1,0 +1,5 @@
+<div class="cell" style="width:{{liwidth}}">
+	<span>{{title}}</span>
+	<span ng-click="sort(key)" ng-show="sortable"><i class="fa fa-sort-up" ng-show="!reverse"></i><i class="fa fa-sort-down" ng-show="reverse"></i></span>
+	<span ng-show="searcheable"><input type="text" ng-show="search" ng-model="searchval"><i class="fa fa-search" ng-click="search = !search"></i></span>
+</div>

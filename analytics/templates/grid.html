@@ -1,0 +1,16 @@
+<div>
+<ul class="table" ng-if="autoGenerateColumns">
+<li class="row header">
+	<div ng-repeat="(key,item) in source[0]" class="cell"><span>{{key}}</span></div>
+</li>
+<li ng-repeat="obj in source" class="row">
+	<div ng-repeat="item in obj" class="cell"><span>{{item}}</span></div>
+</li>
+</ul>
+<ul class="table" ng-if="!autoGenerateColumns">
+<li class="row header" ng-transclude></li>
+<li ng-repeat="obj in source|orderObjectBy:sortkey:reverse|filterObjectBy:searchkey:searchval" class="row">
+	<div ng-repeat="item in columns" class="cell"><span>{{obj[item.key]}}</span></div>
+</li>
+</ul>
+</div>
