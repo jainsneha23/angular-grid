@@ -50,6 +50,12 @@ var initFilters = function() {
             return filtered;
         };
     });
+    analyticsModule.filter('startFrom', function() {
+        return function(input, start) {
+            start = +start;
+            return input.slice(start);
+        }
+    });
 }
 
 document.addEventListener('DOMContentLoaded', initFilters);

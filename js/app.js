@@ -10,10 +10,10 @@ myapp.controller('appcontroller', function($scope) {
     $scope.gridOptions = {};
     $scope.gridOptions.data = list;
     $scope.gridOptions.enableColumnResizing = true;
-    $scope.gridOptions.enableFiltering = true;
     $scope.gridOptions.enableGridMenu = true;
     $scope.gridOptions.showGridFooter = true;
     $scope.gridOptions.showColumnFooter = true;
+    $scope.gridOptions.maxRow = 5;
 
     $scope.gridOptions.rowIdentity = function(row) {
         return row.id;

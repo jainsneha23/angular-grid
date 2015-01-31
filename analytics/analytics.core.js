@@ -53,16 +53,37 @@ var init = function() {
                         $scope.origData = $scope.gridData.slice();
                     });
                 }();
+
+                $scope.paging = function(){
+                    $scope.pageSize  = $scope.uiGrid.maxRow || $scope.gridData.length;
+                    if($scope.pageSize >= $scope.gridData.length){
+                        $scope.noOfPages = 1;
+                    }else{
+                        $scope.noOfPages = parseInt($scope.gridData.length/$scope.pageSize);
+                    }
+                    $scope.currPage = 1;
+                };
+
+                $scope.paging();
+
                 $scope.$watch('columnData', function(newval, oldval) {
                     angular.forEach(oldval, function(item, i) {
+                        var changed = false;
                         var oldSearch = oldval[i].searchval || '';
                         var newSearch = newval[i].searchval || '';
-                        if (oldSearch.length < newSearch.length)
+                        if (oldSearch.length < newSearch.length){
                             $scope.gridData = $filter('filterObjectBy')($scope.gridData, newval[i].name, newval[i].searchval);
-                        else if (oldSearch.length > newSearch.length)
+                            changed = true;
+                        }
+                        else if (oldSearch.length > newSearch.length){
                             $scope.gridData = $filter('filterObjectBy')($scope.origData, newval);
-                        //else if(oldval[i].dir != newval[i].dir)
-                        $scope.gridData = $filter('orderObjectBy')($scope.gridData, $scope.sortItem, $scope.dir);
+                            changed = true;
+                        }
+                        if(oldval[i].dir != newval[i].dir || changed){
+                            $scope.gridData = $filter('orderObjectBy')($scope.gridData, $scope.sortItem, $scope.dir);
+                            if(changed)
+                                $scope.paging();
+                        }
                     });
                 }, true);
                 $scope.setSort = function(sortItem, dir) {
