@@ -2,11 +2,12 @@
 
 Pure angular grid
 
-OPtions available : 
+Options available : 
 
-Auto-initialise columns
 Define columns
 Sorting
 Filtering
+
+Next target : Auto initialisation of columns and paging.
 
 And lot more to come..
