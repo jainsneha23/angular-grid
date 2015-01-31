@@ -5,7 +5,7 @@ html, body{
 	font-size: 14px;
 	max-width: 100%;
 }
-div[am-grid]{
+div[ui-grid]{
   width:80%;
   margin:auto;
   padding:10px;

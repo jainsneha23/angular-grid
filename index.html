@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
@@ -10,9 +11,11 @@
     <link rel="stylesheet" href="analytics/font-awesome-4.3.0/css/font-awesome.min.css" type="text/css" media="all" />
     <link rel="stylesheet" href="analytics/styles/analytics.css" type="text/css" media="all" />
     <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
-  </head>
-  <body ng-controller="appcontroller">
-  <am-grid data-source="list" 
+</head>
+
+<body ng-controller="appcontroller">
+
+    <!-- <am-grid data-source="list" 
                      width="100%" 
                      height="400px"
                      max-rows="10"
@@ -21,13 +24,16 @@
                     <column key="artist" title="Artist"  liwidth="30%"  data-type="string" resizable></column>
                     <column key="title" title="Song" liwidth="40%" data-type="string" filter searcheable></column>
                     <column key="duration" title="Duration"  liwidth="10%" data-type="time" sortable></column>
-                </am-grid>
-    
+                </am-grid> -->
+
+    <div id="grid1" ui-grid="gridOptions" class="grid"></div>
+
     <script src="js/vendor/angular.min.js"></script>
     <script src="data/list.js"></script>
     <script src="analytics/analytics.core.js"></script>
     <script src="analytics/modules/analytics.filters.js"></script>
     <script src="js/app.js"></script>
 
-  </body>
+</body>
+
 </html>

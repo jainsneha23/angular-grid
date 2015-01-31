@@ -1,16 +1,21 @@
-<div>
-<ul class="table" ng-if="autoGenerateColumns">
-<li class="row header">
-	<div ng-repeat="(key,item) in source[0]" class="cell"><span>{{key}}</span></div>
-</li>
-<li ng-repeat="obj in source" class="row">
-	<div ng-repeat="item in obj" class="cell"><span>{{item}}</span></div>
-</li>
+<ul class="table">
+    <li class="row header">
+        <div ng-repeat="item in columnData" class="cell">
+            <span>{{item.name}}</span>
+            <span ng-show="item.sortable">
+                <i class="fa fa-sort-down" ng-show="item.dir == 'desc'" ng-click = "setSort('','')"></i>
+                <i class="fa fa-sort-up" ng-show="item.dir == 'asc'" ng-click="setSort(item.name,'desc')"></i>
+                <i class="fa fa-unsorted" ng-show="!item.dir" ng-click = "setSort(item.name,'asc')"></i>
+            </span>
+            <span ng-show="item.searcheable" class="searchdiv">
+                <input type="text" ng-show="search" ng-model="item.searchval">
+                <i class="fa fa-eraser" ng-click="search = !search; item.searchval = ''" ng-show="search"></i>
+                <i class="fa fa-search" ng-click="search = !search" ng-show="!search"></i>
+            </span>
+        </div>
+    </li>
+    <li ng-repeat="obj in gridData" class="row">
+        <div ng-repeat="item in columnData" class="cell"><span>{{obj[item.name]}}</span>
+        </div>
+    </li>
 </ul>
-<ul class="table" ng-if="!autoGenerateColumns">
-<li class="row header" ng-transclude></li>
-<li ng-repeat="obj in source|orderObjectBy:sortkey:reverse|filterObjectBy:searchkey:searchval" class="row">
-	<div ng-repeat="item in columns" class="cell"><span>{{obj[item.key]}}</span></div>
-</li>
-</ul>
-</div>
