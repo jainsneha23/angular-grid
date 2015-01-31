@@ -10,17 +10,27 @@ var init = function() {
                 uiGrid: '='
             },
             templateUrl: 'analytics/templates/grid.html',
-            link: function(scope, element, attrs) {
+            controller: function($scope) {
 
-                scope.columnData = scope.uiGrid.columnDefs;
-                scope.sortItem = '';
-                scope.dir = '';
+            },
+            link: function($scope, element, attrs) {
+
+                var createColumns = function(){
+                    if($scope.uiGrid.columnDefs){
+                        $scope.columnData = $scope.uiGrid.columnDefs;
+                        return;
+                    }
+                    $scope.columnData = [];
+                    angular.forEach($scope.uiGrid.data[0], function(item, index) {
+                        $scope.columnData.push({name:index});
+                    });
+                }();
 
                 var createGrid = function() {
-                    scope.gridData = [];
-                    angular.forEach(scope.uiGrid.data, function(item, index) {
+                    $scope.gridData = [];
+                    angular.forEach($scope.uiGrid.data, function(item, index) {
                         var row = {};
-                        angular.forEach(scope.columnData, function(prop,i) {
+                        angular.forEach($scope.columnData, function(prop, i) {
                             row.hashIndex = index;
                             if (prop.name.indexOf('.') == -1) {
                                 if (item[prop.name] && typeof item[prop.name] != "string")
@@ -39,37 +49,35 @@ var init = function() {
                                     row[prop.name] = member;
                             }
                         });
-                        scope.gridData.push(row);
-                        scope.origData = scope.gridData.slice();
+                        $scope.gridData.push(row);
+                        $scope.origData = $scope.gridData.slice();
                     });
                 }();
-                scope.$watch('columnData', function(newval, oldval) {
+                $scope.$watch('columnData', function(newval, oldval) {
                     angular.forEach(oldval, function(item, i) {
                         var oldSearch = oldval[i].searchval || '';
                         var newSearch = newval[i].searchval || '';
                         if (oldSearch.length < newSearch.length)
-                            scope.gridData = $filter('filterObjectBy')(scope.gridData, newval[i].name, newval[i].searchval);
+                            $scope.gridData = $filter('filterObjectBy')($scope.gridData, newval[i].name, newval[i].searchval);
                         else if (oldSearch.length > newSearch.length)
-                            scope.gridData = $filter('filterObjectBy')(scope.origData, newval);
+                            $scope.gridData = $filter('filterObjectBy')($scope.origData, newval);
                         //else if(oldval[i].dir != newval[i].dir)
-                        scope.gridData = $filter('orderObjectBy')(scope.gridData, scope.sortItem, scope.dir );
+                        $scope.gridData = $filter('orderObjectBy')($scope.gridData, $scope.sortItem, $scope.dir);
                     });
                 }, true);
-                scope.setSort = function(sortItem, dir) {
+                $scope.setSort = function(sortItem, dir) {
                     sortItem = sortItem || 'hashIndex';
                     dir = dir || 'asc';
-                    scope.sortItem = sortItem;
-                    scope.dir = dir;
-                    angular.forEach(scope.columnData,function(obj){
-                        if(obj.name == sortItem)
+                    $scope.sortItem = sortItem;
+                    $scope.dir = dir;
+                    angular.forEach($scope.columnData, function(obj) {
+                        if (obj.name == sortItem)
                             obj.dir = dir;
-                        else if(obj.sortable)
+                        else if (obj.sortable)
                             obj.dir = "";
                     });
                 }
-
-            },
-            controller: function($scope) {}
+            }
         }
     });
 }
