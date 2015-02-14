@@ -1,20 +1,22 @@
-# angular-grid 
+<p># angular-grid&nbsp;</p>
 
-Pure angular grid
+<p>Pure angular grid</p>
 
-Options available : 
+Demo: <a href="https://cdn.rawgit.com/snehatulsi/angular-grid/master/index.html">Demo URL</a>
 
-Define columns
-Auto initialise columns if no column defined
-Sorting
-Filtering
-Paging
-Column selection feature
+<p>Options available :&nbsp;</p>
 
-Highlight:
-Responsive design
-Easy to re-use code
+<p>Define columns<br />
+Auto initialise columns if no column defined<br />
+Sorting<br />
+Filtering<br />
+Paging<br />
+Column selection feature</p>
 
-Next target : Max height feature.
+<p>Highlight:<br />
+Responsive design<br />
+Easy to re-use code</p>
 
-And lot more to come..
+<p>Next target : Max height feature.</p>
+
+<p>And lot more to come..</p>
