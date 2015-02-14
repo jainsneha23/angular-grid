@@ -10,10 +10,8 @@ myapp.controller('appcontroller', function($scope) {
     $scope.gridOptions = {};
     $scope.gridOptions.data = list;
     $scope.gridOptions.enableColumnResizing = true;
-    $scope.gridOptions.enableGridMenu = true;
-    $scope.gridOptions.showGridFooter = true;
-    $scope.gridOptions.showColumnFooter = true;
-    $scope.gridOptions.maxRow = 5;
+    $scope.gridOptions.enableRowSelection = true;
+    $scope.gridOptions.maxRow = 10;
 
     $scope.gridOptions.rowIdentity = function(row) {
         return row.id;
@@ -79,10 +77,5 @@ myapp.controller('appcontroller', function($scope) {
         width: 300,
         enableCellEdit: true,
         cellTemplate: '<div class="ui-grid-cell-contents"><span>AAbout:{{COL_FIELD}}</span></div>'
-    }, {
-        name: 'agetemplate',
-        field: 'age',
-        width: 150,
-        cellTemplate: '<div class="ui-grid-cell-contents"><span>Age 2:{{COL_FIELD}}</span></div>'
     }];
 });

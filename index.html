@@ -9,29 +9,20 @@
     <title>Analytics</title>
     <link rel="stylesheet" href="css/reset.css" type="text/css" media="all" />
     <link rel="stylesheet" href="analytics/font-awesome-4.3.0/css/font-awesome.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="analytics/styles/ngDrop.css" type="text/css" media="all" />
     <link rel="stylesheet" href="analytics/styles/analytics.css" type="text/css" media="all" />
     <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
 </head>
 
 <body ng-controller="appcontroller">
 
-    <!-- <am-grid data-source="list" 
-                     width="100%" 
-                     height="400px"
-                     max-rows="10"
-                     auto-generate-columns="false">
-                    <column key="album" title="Album" liwidth="20%" data-type="string" resizable filter sortable searcheable></column>
-                    <column key="artist" title="Artist"  liwidth="30%"  data-type="string" resizable></column>
-                    <column key="title" title="Song" liwidth="40%" data-type="string" filter searcheable></column>
-                    <column key="duration" title="Duration"  liwidth="10%" data-type="time" sortable></column>
-                </am-grid> -->
-
     <div id="grid1" ui-grid="gridOptions" class="grid"></div>
 
     <script src="js/vendor/angular.min.js"></script>
     <script src="data/list.js"></script>
-    <script src="analytics/analytics.core.js"></script>
+    <script src="analytics/analytics.core.js"></script>    
     <script src="analytics/modules/analytics.filters.js"></script>
+    <script src="analytics/modules/analytics.directives.js"></script>
     <script src="js/app.js"></script>
 
 </body>

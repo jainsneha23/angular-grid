@@ -15,18 +15,47 @@ var init = function() {
             },
             link: function($scope, element, attrs) {
 
-                var createColumns = function(){
-                    if($scope.uiGrid.columnDefs){
-                        $scope.columnData = $scope.uiGrid.columnDefs;
-                        return;
-                    }
-                    $scope.columnData = [];
+                var createColumns = function() {
+                    $scope.origColumnData = [];
                     angular.forEach($scope.uiGrid.data[0], function(item, index) {
-                        $scope.columnData.push({name:index});
+                        if (typeof item == 'object') {
+                            angular.forEach(item, function(subitem, subindex) {
+                                $scope.origColumnData.push({
+                                    name: index + "." + subindex,
+                                    active: true
+                                });
+                            });
+                        } else {
+                            $scope.origColumnData.push({
+                                name: index,
+                                active: true
+                            });
+                        }
                     });
-                }();
+                    if ($scope.uiGrid.columnDefs) {
+                        $scope.origColumnData = $scope.origColumnData.map(function(item) {
+
+                            var pos = $scope.uiGrid.columnDefs.map(function(e) { return e.name; }).indexOf(item.name);
+                            
+                            if (pos > -1) {
+                                $scope.uiGrid.columnDefs[pos].active = true;
+                                return $scope.uiGrid.columnDefs[pos];
+                            } else {
+                                item.active = false;
+                                return item;
+                            }
+                        });
+                    }
+                };
 
                 var createGrid = function() {
+                    $scope.columnData = [];
+
+                    $scope.origColumnData.forEach(function(item) {
+                        if(item.active == true)
+                            $scope.columnData.push(Object.create(item));
+                    });
+
                     $scope.gridData = [];
                     angular.forEach($scope.uiGrid.data, function(item, index) {
                         var row = {};
@@ -50,42 +79,54 @@ var init = function() {
                             }
                         });
                         $scope.gridData.push(row);
-                        $scope.origData = $scope.gridData.slice();
+                        $scope.origGridData = $scope.gridData.slice();
                     });
-                }();
+                };
 
-                $scope.paging = function(){
-                    $scope.pageSize  = $scope.uiGrid.maxRow || $scope.gridData.length;
-                    if($scope.pageSize >= $scope.gridData.length){
+                var paging = function() {
+                    if (!$scope.uiGrid.maxRow) return;
+                    $scope.pageSize = $scope.uiGrid.maxRow || $scope.gridData.length;
+                    if ($scope.pageSize >= $scope.gridData.length) {
                         $scope.noOfPages = 1;
-                    }else{
-                        $scope.noOfPages = parseInt($scope.gridData.length/$scope.pageSize);
+                    } else {
+                        $scope.noOfPages = parseInt($scope.gridData.length / $scope.pageSize);
                     }
                     $scope.currPage = 1;
                 };
 
-                $scope.paging();
+                var init = function() {
+                    createColumns();
+                    createGrid();
+                    paging();
+                }();
 
                 $scope.$watch('columnData', function(newval, oldval) {
+                    //change in columns
+                    if(newval && newval.length != oldval.length)
+                      return;
                     angular.forEach(oldval, function(item, i) {
                         var changed = false;
                         var oldSearch = oldval[i].searchval || '';
                         var newSearch = newval[i].searchval || '';
-                        if (oldSearch.length < newSearch.length){
+                        if (oldSearch.length < newSearch.length) {
                             $scope.gridData = $filter('filterObjectBy')($scope.gridData, newval[i].name, newval[i].searchval);
                             changed = true;
-                        }
-                        else if (oldSearch.length > newSearch.length){
+                        } else if (oldSearch.length > newSearch.length) {
                             $scope.gridData = $filter('filterObjectBy')($scope.origData, newval);
                             changed = true;
                         }
-                        if(oldval[i].dir != newval[i].dir || changed){
+                        if (oldval[i].dir != newval[i].dir || changed) {
                             $scope.gridData = $filter('orderObjectBy')($scope.gridData, $scope.sortItem, $scope.dir);
-                            if(changed)
-                                $scope.paging();
+                            if (changed)
+                                paging();
                         }
                     });
                 }, true);
+
+                $scope.$watch('origColumnData', function(newval, oldval) {
+                          createGrid();
+                }, true);
+
                 $scope.setSort = function(sortItem, dir) {
                     sortItem = sortItem || 'hashIndex';
                     dir = dir || 'asc';

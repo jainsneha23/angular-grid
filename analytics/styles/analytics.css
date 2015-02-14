@@ -23,11 +23,10 @@
 }
 .cell{
 	display: table-cell;
-	max-width: 200px;
 }
 .cell > span{
 	display: inline-block;
-	max-width: 85%;
+	max-width: calc(100% - 20px);
 	overflow: hidden;
 	text-align: left;
 	text-overflow: ellipsis;
@@ -35,17 +34,28 @@
 	padding: 5px;
 	line-height: 1.5em;
 	box-sizing: border-box;
+	vertical-align: middle;
 }
 .cell span.searchdiv{
   display: block;
   text-align: right;
+  max-width: 100%;
 }
 .cell span.sortdiv{
-  padding:0;
-  right: 0;
+  float: right;
 }
-.cell span *{
-  max-width:70%;
+.cell .inputspan{
+  background-color: #fff;
+  padding: 1px 0px;
+  color: rgb(136, 136, 136);
+  margin: 2px;
+  text-align: right;
+}
+.cell input{
+  max-width: calc(100% - 35px);
+  border: none;
+  outline: none;
+  max-height: 100%;
 }
 .header.row{
   background-color: #888;
