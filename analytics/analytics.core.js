@@ -112,7 +112,7 @@ var init = function() {
                             $scope.gridData = $filter('filterObjectBy')($scope.gridData, newval[i].name, newval[i].searchval);
                             changed = true;
                         } else if (oldSearch.length > newSearch.length) {
-                            $scope.gridData = $filter('filterObjectBy')($scope.origData, newval);
+                            $scope.gridData = $filter('filterObjectBy')($scope.origGridData, newval);
                             changed = true;
                         }
                         if (oldval[i].dir != newval[i].dir || changed) {
