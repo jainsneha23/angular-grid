@@ -11,12 +11,15 @@ Auto initialise columns if no column defined<br />
 Sorting<br />
 Filtering<br />
 Paging<br />
-Column selection feature</p>
+Column selection feature<br />
+Max height feature<br />
+Row length selection<br />
+</p>
 
 <p>Highlight:<br />
 Responsive design<br />
 Easy to re-use code</p>
 
-<p>Next target : Max height feature.</p>
+<p>Next target : Column fixing</p>
 
 <p>And lot more to come..</p>

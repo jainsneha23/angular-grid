@@ -1,21 +1,32 @@
-<ul class="table">
-    <li class="colgroup rightAlign">
+<div class="loading" ng-show="!local.gridReady">
+    <div class="spinner">
+        <div class="cube1"></div>
+        <div class="cube2"></div>
+    </div>
+</div>
+<div id="agrid" ng-show="local.gridReady">
+    <div class="topHeader" id="gridHead">
         <div ng-show="uiGrid.enableRowSelection">
-            <dropdown style="width: 200px;" dropdown-placeholder="{{columnData.length}} Selected">
-                <div search search-model='searchText' placeholder='Find Column'></div>
-                <div multi-select ng-model="origColumnData" displayTest="name" checkvalue="active" search-model="searchText"></div>
+            <dropdown style="width: 200px;" dropdown-placeholder="{{local.columnData.length}} Selected">
+                <div search search-model='local.searchText' placeholder='Find Column'></div>
+                <div multi-select ng-model="local.origColumnData" displayTest="name" checkvalue="active" search-model="local.searchText"></div>
             </dropdown>
         </div>
-        <div ng-show="uiGrid.maxRow">
-            <span>{{currPage}} of {{noOfPages}}</span>
-            <button ng-disabled="currPage == 1" ng-click="currPage = currPage - 1"><i class="fa fa-arrow-left"></i>
-            </button>
-            <button ng-disabled="currPage == noOfPages" ng-click="currPage = currPage + 1"><i class="fa fa-arrow-right"></i>
-            </button>
+        <div pager class="rightAlign">
+            <div ng-show="uiGrid.enablemaxRowSelection">
+                <label>Rows per page: <input ng-model="local.maxRow" ng-blur="paging()" max="local.gridData.length"></label>
+            </div>
+            <div ng-show="local.maxRow">
+                <span>{{local.currPage}} of {{local.noOfPages}}</span>
+                <button ng-disabled="local.currPage == 1" ng-click="local.currPage = local.currPage - 1"><i class="fa fa-arrow-left"></i>
+                </button>
+                <button ng-disabled="local.currPage == noOfPages" ng-click="local.currPage = local.currPage + 1"><i class="fa fa-arrow-right"></i>
+                </button>
+            </div>
         </div>
-    </li>
-    <li class="row header">
-        <div ng-repeat="item in columnData| filter : {active: true} : true" class="cell">
+    </div>
+    <div class="row header" id="rowHead">
+        <div ng-repeat="item in local.columnData| filter : {active: true} : true" class="cell">
             <span title="{{item.name}}">{{item.name}}</span>
             <span ng-show="item.sortable" class="sortdiv">
                 <i class="fa fa-sort-down" ng-show="item.dir == 'desc'" ng-click = "setSort('','')"></i>
@@ -30,9 +41,11 @@
             <i class="fa fa-search" ng-click="search = !search"></i>
             </span>
         </div>
-    </li>
-    <li ng-repeat="obj in gridData|startFrom:(currPage-1)*pageSize|limitTo:pageSize" class="row">
-        <div ng-repeat="item in columnData" class="cell"><span>{{obj[item.name]}}</span>
-        </div>
-    </li>
-</ul>
+    </div>
+    <ul class="tbody" id="tablerow">
+        <li ng-repeat="obj in local.gridData|startFrom:(local.currPage-1)*local.pageSize|limitTo:local.pageSize" class="row">
+            <div ng-repeat="item in local.columnData" class="cell"><span>{{obj[item.name]}}</span>
+            </div>
+        </li>
+    </ul>
+</div>

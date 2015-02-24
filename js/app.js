@@ -11,7 +11,9 @@ myapp.controller('appcontroller', function($scope) {
     $scope.gridOptions.data = list;
     $scope.gridOptions.enableColumnResizing = true;
     $scope.gridOptions.enableRowSelection = true;
-    $scope.gridOptions.maxRow = 10;
+    $scope.gridOptions.maxRow = 20;
+    $scope.gridOptions.height = '300px';
+    $scope.gridOptions.enablemaxRowSelection = true;
 
     $scope.gridOptions.rowIdentity = function(row) {
         return row.id;
