@@ -13,14 +13,14 @@
             </dropdown>
         </div>
         <div pager class="rightAlign">
-            <div ng-show="uiGrid.enablemaxRowSelection">
-                <label>Rows per page: <input ng-model="local.maxRow" ng-blur="paging()" max="local.gridData.length"></label>
+            <div ng-show="uiGrid.enablePageSizeSelection">
+                <label>Rows per page: <input ng-model="local.pageSize" ng-change="pageChanged()"></label>
             </div>
-            <div ng-show="local.maxRow">
+            <div ng-show="local.pageSize">
                 <span>{{local.currPage}} of {{local.noOfPages}}</span>
                 <button ng-disabled="local.currPage == 1" ng-click="local.currPage = local.currPage - 1"><i class="fa fa-arrow-left"></i>
                 </button>
-                <button ng-disabled="local.currPage == noOfPages" ng-click="local.currPage = local.currPage + 1"><i class="fa fa-arrow-right"></i>
+                <button ng-disabled="local.currPage == local.noOfPages" ng-click="local.currPage = local.currPage + 1"><i class="fa fa-arrow-right"></i>
                 </button>
             </div>
         </div>
@@ -44,7 +44,7 @@
     </div>
     <ul class="tbody" id="tablerow">
         <li ng-repeat="obj in local.gridData|startFrom:(local.currPage-1)*local.pageSize|limitTo:local.pageSize" class="row">
-            <div ng-repeat="item in local.columnData" class="cell"><span>{{obj[item.name]}}</span>
+            <div ng-repeat="item in local.columnData" class="cell" style="width: {{item.width || 150}}px; flex:none;"><span>{{obj[item.name]}}</span>
             </div>
         </li>
     </ul>

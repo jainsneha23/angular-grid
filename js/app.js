@@ -11,9 +11,9 @@ myapp.controller('appcontroller', function($scope) {
     $scope.gridOptions.data = list;
     $scope.gridOptions.enableColumnResizing = true;
     $scope.gridOptions.enableRowSelection = true;
-    $scope.gridOptions.maxRow = 20;
+    $scope.gridOptions.pageSize = 20;
     $scope.gridOptions.height = '300px';
-    $scope.gridOptions.enablemaxRowSelection = true;
+    $scope.gridOptions.enablePageSizeSelection = true;
 
     $scope.gridOptions.rowIdentity = function(row) {
         return row.id;
@@ -25,7 +25,7 @@ myapp.controller('appcontroller', function($scope) {
     $scope.gridOptions.columnDefs = [{
         name: 'id',
         width: 50,
-        sortable: true
+        sortable: true,
     }, {
         name: 'name',
         width: 100,
@@ -50,13 +50,11 @@ myapp.controller('appcontroller', function($scope) {
         cellTemplate: '<div class="ui-grid-cell-contents"><span>City:{{COL_FIELD}}</span></div>'
     }, {
         name: 'address.state',
-        width: 50,
         enableCellEdit: true,
         sortable : true,
         cellTemplate: '<div class="ui-grid-cell-contents"><span>State:{{COL_FIELD}}</span></div>'
     }, {
         name: 'address.zip',
-        width: 50,
         enableCellEdit: true,
         cellTemplate: '<div class="ui-grid-cell-contents"><span>Zip:{{COL_FIELD}}</span></div>'
     }, {

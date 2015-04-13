@@ -11,13 +11,10 @@
   border-radius: 5px;
 }
 .tbody{
-  max-width: 100%;
-  width: 100%;
   border-right: 1px solid rgb(212, 212, 212);
 }
 .row{
 	display: flex;
-	max-width: 100%;
 }
 .topHeader{
   padding: 10px;

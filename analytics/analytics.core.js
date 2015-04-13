@@ -27,7 +27,7 @@ var init = function() {
                         height = height - h1 - h2;
 
                         document.getElementById('tablerow').style.maxHeight = height + 'px';
-                        document.getElementById('tablerow').style.overflow = 'scroll';
+                        document.getElementById('tablerow').style.overflowY = 'scroll';
                     }
                     $scope.local.gridReady = true;
                 }
@@ -71,7 +71,7 @@ var init = function() {
 
                     $scope.local.origColumnData.forEach(function(item) {
                         if(item.active == true)
-                            $scope.local.columnData.push(Object.create(item));
+                            $scope.local.columnData.push(item.clone());
                     });
 
                     $scope.local.gridData = [];
@@ -102,28 +102,35 @@ var init = function() {
                     $timeout(styling,0);
                 };
 
-                $scope.paging = function() {
-                    if(isNaN($scope.local.maxRow) || $scope.local.maxRow < 1 || $scope.local.maxRow > $scope.local.gridData.length){
-                        alert('Please enter a valid rows per page');
-                        $scope.local.maxRow = $scope.uiGrid.maxRow || $scope.local.gridData.length;
-                        return;
-                    }         
+                var resetPageSize = function(){
+                  $scope.local.pageSize = Math.min($scope.uiGrid.pageSize,$scope.local.gridData.length);
+                }
+
+                var paging = function() {
                     $scope.local.currPage = 1;
-                    $scope.local.maxRow = $scope.local.maxRow || $scope.uiGrid.maxRow;
-                    $scope.local.pageSize = $scope.local.maxRow || $scope.local.gridData.length;
-                    if (!$scope.uiGrid.maxRow) return;                    
+                    resetPageSize();
+                    if (!$scope.uiGrid.pageSize) return;
                     if ($scope.local.pageSize >= $scope.local.gridData.length) {
                         $scope.local.noOfPages = 1;
                     } else {
-                        $scope.local.noOfPages = parseInt($scope.local.gridData.length / $scope.local.pageSize);
+                        $scope.local.noOfPages = Math.ceil($scope.local.gridData.length / $scope.local.pageSize);
                     }
                     
                 };
 
+                $scope.pageChanged = function(){
+                  if(isNaN($scope.local.pageSize) || $scope.local.pageSize < 1 || $scope.local.pageSize > $scope.local.gridData.length){
+                        alert('Please enter a valid rows per page');
+                        resetPageSize();
+                        return;
+                  }
+                  paging();
+                }
+
                 var init = function() {
                     createColumns();
                     createGrid();
-                    $scope.paging();
+                    paging();
                     $timeout(styling,0);
                 }();
 
@@ -145,7 +152,7 @@ var init = function() {
                         if (oldval[i].dir != newval[i].dir || changed) {
                             $scope.local.gridData = $filter('orderObjectBy')($scope.local.gridData, $scope.local.sortItem, $scope.local.dir);
                             if (changed)
-                                $scope.paging();
+                                paging();
                         }
                     });
                 }, true);
