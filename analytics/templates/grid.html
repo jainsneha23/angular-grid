@@ -1,10 +1,10 @@
-<div class="loading" ng-show="!local.gridReady">
+<div class="loading" ng-style="local.gridReady == true? {'visibility' : 'hidden'} : {'visibility' : 'visible'}">
     <div class="spinner">
         <div class="cube1"></div>
         <div class="cube2"></div>
     </div>
 </div>
-<div id="agrid" ng-show="local.gridReady">
+<div id="agrid" ng-style="local.gridReady == true? {'visibility' : 'visible'} : {'visibility' : 'hidden'}">
     <div class="topHeader" id="gridHead">
         <div ng-show="uiGrid.enableRowSelection">
             <dropdown style="width: 200px;" dropdown-placeholder="{{local.columnData.length}} Selected">
@@ -14,7 +14,7 @@
         </div>
         <div pager class="rightAlign">
             <div ng-show="uiGrid.enablePageSizeSelection">
-                <label>Rows per page: <input ng-model="local.pageSize" ng-change="pageChanged()"></label>
+                <label>Rows per page: <input ng-model="local.pageSize" ng-blur="pageChanged()"></label>
             </div>
             <div ng-show="local.pageSize">
                 <span>{{local.currPage}} of {{local.noOfPages}}</span>
@@ -25,27 +25,30 @@
             </div>
         </div>
     </div>
-    <div class="row header" id="rowHead">
-        <div ng-repeat="item in local.columnData| filter : {active: true} : true" class="cell">
-            <span title="{{item.name}}">{{item.name}}</span>
-            <span ng-show="item.sortable" class="sortdiv">
-                <i class="fa fa-sort-down" ng-show="item.dir == 'desc'" ng-click = "setSort('','')"></i>
-                <i class="fa fa-sort-up" ng-show="item.dir == 'asc'" ng-click="setSort(item.name,'desc')"></i>
-                <i class="fa fa-unsorted" ng-show="!item.dir" ng-click = "setSort(item.name,'asc')"></i>
-            </span>
-            <span ng-show="item.searcheable" class="searchdiv">
-                <span class="inputspan">
-                    <input type="text" ng-model="item.searchval">
-                    <i class="fa fa-close" ng-click="item.searchval = ''"></i>
+    <div id="agridTable">
+        <div class="row header" id="rowHead">
+            <div ng-repeat="item in local.columnData" class="cell" ng-style="{'width': (item.width || dWidth) + 'px'}">
+                <span title="{{item.name}}">{{item.name}}</span>
+                <span ng-show="item.sortable" class="sortdiv">
+                    <i class="fa fa-sort-down" ng-show="item.dir == 'desc'" ng-click = "setSort('','')"></i>
+                    <i class="fa fa-sort-up" ng-show="item.dir == 'asc'" ng-click="setSort(item.name,'desc')"></i>
+                    <i class="fa fa-unsorted" ng-show="!item.dir" ng-click = "setSort(item.name,'asc')"></i>
                 </span>
-            <i class="fa fa-search" ng-click="search = !search"></i>
-            </span>
-        </div>
-    </div>
-    <ul class="tbody" id="tablerow">
-        <li ng-repeat="obj in local.gridData|startFrom:(local.currPage-1)*local.pageSize|limitTo:local.pageSize" class="row">
-            <div ng-repeat="item in local.columnData" class="cell" style="width: {{item.width || 150}}px; flex:none;"><span>{{obj[item.name]}}</span>
+                <span ng-show="item.searcheable" class="searchdiv">
+                    <span class="inputspan">
+                        <input type="text" ng-model="item.searchval">
+                        <i class="fa fa-close" ng-click="item.searchval = ''"></i>
+                    </span>
+                <i class="fa fa-search" ng-click="search = !search"></i>
+                </span>
             </div>
-        </li>
-    </ul>
+        </div>
+        <ul class="tbody" id="tablerow">
+            <li ng-repeat="obj in local.gridData|startFrom:(local.currPage-1)*local.pageSize|limitTo:local.pageSize" class="row" 
+            on-finish-render = "styling()">
+                <div ng-repeat="item in local.columnData" class="cell" ng-style="{'width': (item.width || dWidth) + 'px'}"><span>{{obj[item.name]}}</span>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>

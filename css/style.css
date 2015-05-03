@@ -9,5 +9,5 @@ div[ui-grid]{
   width:80%;
   margin:auto;
   padding:10px;
-  box-sizing: content-box;
+  box-sizing: border-box;
 }

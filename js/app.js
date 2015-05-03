@@ -39,12 +39,12 @@ myapp.controller('appcontroller', function($scope) {
         cellTemplate: '<div class="ui-grid-cell-contents"><span>Age:{{COL_FIELD}}</span></div>'
     }, {
         name: 'address.street',
-        width: 150,
+        //width: 150,
         enableCellEdit: true,
         cellTemplate: '<div class="ui-grid-cell-contents"><span>Street:{{COL_FIELD}}</span></div>'
     }, {
         name: 'address.city',
-        width: 150,
+        //width: 150,
         enableCellEdit: true,
         searcheable : true,
         cellTemplate: '<div class="ui-grid-cell-contents"><span>City:{{COL_FIELD}}</span></div>'
@@ -53,7 +53,7 @@ myapp.controller('appcontroller', function($scope) {
         enableCellEdit: true,
         sortable : true,
         cellTemplate: '<div class="ui-grid-cell-contents"><span>State:{{COL_FIELD}}</span></div>'
-    }, {
+    },/* {
         name: 'address.zip',
         enableCellEdit: true,
         cellTemplate: '<div class="ui-grid-cell-contents"><span>Zip:{{COL_FIELD}}</span></div>'
@@ -72,7 +72,7 @@ myapp.controller('appcontroller', function($scope) {
         width: 200,
         enableCellEdit: true,
         cellTemplate: '<div class="ui-grid-cell-contents"><span>Phone:{{COL_FIELD}}</span></div>'
-    }, {
+    }, */{
         name: 'about',
         width: 300,
         enableCellEdit: true,

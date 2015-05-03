@@ -18,16 +18,13 @@ var init = function() {
             link: function($scope, element, attrs) {
                 $scope.local = {};
                 $scope.local.gridReady = false;
+                $scope.dWidth = 150;
 
-                var styling = function() {
+                $scope.styling = function() {
                     if ($scope.uiGrid.height) {
                         var height = parseInt($scope.uiGrid.height);
-                        var h1 = document.getElementById('gridHead').offsetHeight;
-                        var h2 = document.getElementById('rowHead').offsetHeight;
-                        height = height - h1 - h2;
-
-                        document.getElementById('tablerow').style.maxHeight = height + 'px';
-                        document.getElementById('tablerow').style.overflowY = 'scroll';
+                        document.getElementById('agridTable').style.maxHeight = height + 'px';
+                        document.getElementById('agridTable').style.overflow = 'auto';
                     }
                     $scope.local.gridReady = true;
                 }
@@ -68,12 +65,23 @@ var init = function() {
                 var createGrid = function() {
                     $scope.local.gridReady = false;
                     $scope.local.columnData = [];
+                    var flexCol = 0, contentWidth = 0;
 
                     $scope.local.origColumnData.forEach(function(item) {
-                        if(item.active == true)
+                        if(item.active == true){
                             $scope.local.columnData.push(item.clone());
+                            if(!item.width){
+                                flexCol++;
+                                contentWidth += 150;
+                            }
+                            else contentWidth += item.width;
+                        }
                     });
-
+                    
+                    var width = document.getElementById('agrid').offsetWidth;
+                    if(contentWidth < width)
+                        $scope.dWidth = 150 + (width - contentWidth - 20)/flexCol;
+                    
                     $scope.local.gridData = [];
                     angular.forEach($scope.uiGrid.data, function(item, index) {
                         var row = {};
@@ -98,8 +106,7 @@ var init = function() {
                         });
                         $scope.local.gridData.push(row);
                     });
-                    $scope.local.origGridData = $scope.local.gridData.slice();
-                    $timeout(styling,0);
+                    $scope.local.origGridData = $scope.local.gridData.slice
                 };
 
                 var resetPageSize = function(){
@@ -108,7 +115,6 @@ var init = function() {
 
                 var paging = function() {
                     $scope.local.currPage = 1;
-                    resetPageSize();
                     if (!$scope.uiGrid.pageSize) return;
                     if ($scope.local.pageSize >= $scope.local.gridData.length) {
                         $scope.local.noOfPages = 1;
@@ -130,8 +136,8 @@ var init = function() {
                 var init = function() {
                     createColumns();
                     createGrid();
+                    resetPageSize();
                     paging();
-                    $timeout(styling,0);
                 }();
 
                 $scope.$watch('local.columnData', function(newval, oldval) {
