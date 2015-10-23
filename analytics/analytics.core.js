@@ -106,7 +106,7 @@ var init = function() {
                         });
                         $scope.local.gridData.push(row);
                     });
-                    $scope.local.origGridData = $scope.local.gridData.slice
+                    $scope.local.origGridData = $scope.local.gridData.slice(0)
                 };
 
                 var resetPageSize = function(){
